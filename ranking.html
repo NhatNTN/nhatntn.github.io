@@ -47,7 +47,7 @@
                 data_ = result
             
                 yourPromoCode = getUrlVars()["promocode"];
-                if(yourPromoCode.length == 0) {
+                if (typeof(yourPromoCode) === undefined) {
                     return;
                 }
   
@@ -63,16 +63,19 @@
         });
 
         window.onload = function(){
-            document.getElementById('yourPromoCode').innerHTML = yourPromoCode;
-            document.getElementById('yourIndex').innerHTML = yourIndex;
-            document.getElementById('usedTime').innerHTML = usedTime;
+            if (typeof(yourPromoCode) !== "undefined" && typeof(yourIndex) === "number") {
+                document.getElementById("yourRanking").style.display = "block";
+                document.getElementById('yourPromoCode').innerHTML = yourPromoCode;
+                document.getElementById('yourIndex').innerHTML = yourIndex;
+                document.getElementById('usedTime').innerHTML = usedTime;
+            }
         };
     </script>
 </head>
 <body>
 
 <div class="container">
-    <div class="alert alert-success" role="alert">
+    <div id="yourRanking" class="alert alert-success" role="alert">
         <p>Your promotion code is: <b id="yourPromoCode"></b></p>
         <p>Rank: <b id="yourIndex"></b> with <b id="usedTime"></b> referral times</p>
     </div>

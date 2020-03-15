@@ -30,3 +30,5 @@ body {
 .fixed-table-loading {
   display: none;
 }
+
+#yourRanking {display:none;}
