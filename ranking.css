@@ -1,0 +1,32 @@
+html,
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+
+body {
+  padding-top: 56px;
+}
+
+.panel {
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.panel .panel-heading {
+  padding: 1px 12px;
+  background-color: #fa277c;
+}
+
+.panel .panel-body {
+  border-radius: 6px;
+  padding: 0px;
+  min-height: 200px;
+}
+
+.panel .panel-footer {
+  background-color: #fa277c;
+}
+
+.fixed-table-loading {
+  display: none;
+}

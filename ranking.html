@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Leader Board</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.15.4/bootstrap-table.min.js"></script>
+
+    <link rel="stylesheet" href="ranking.css">
+    <script type="text/javascript">
+        $.ajax
+        ({
+            type: "GET",
+            url: "https://login.thrio.com/provider/token-with-authorities",
+            dataType: 'json',
+            async: false,
+            headers: {
+                "Authorization": "Basic " + btoa("admin@flashe.com" + ":" + "flashe5701##")
+            },
+            success: function(result){
+                token_ = result.token
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $.ajax
+        ({
+            type: "GET",
+            url: "https://chelsea.thrio.com/data/api/types/flash/ranking",
+            dataType: 'json',
+            async: false,
+            headers: {
+                "Authorization": token_
+            },
+            success: function(result){
+                data_ = result
+            }
+        });
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <table id="table" data-sort-class="table-active" data-row-style="rowStyle">
+        <thead>
+          <tr>
+            <th data-formatter="runningFormatter">Rank</th>
+            <th data-formatter="" data-field="promoCode">Item Name</th>
+            <th data-field="total">Total</th>
+          </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+   var $table = $('#table')
+
+    $(function() {
+        $table.bootstrapTable({data: data_.slice(0, 9)})
+    })
+
+    function runningFormatter(value, row, index) {
+        return index+1;
+    }
+
+    function promoCodeFormatter(value, row) {
+        return value.substr(0, 2) + new Array(value.length - 3).join('*') + value.substr([value.length - 2], [value.length - 1])
+    }
+
+    function rowStyle(row, index) {
+        var classes = [
+        'bg-danger text-white',
+        'bg-warning text-white',
+        'bg-info text-white',
+        ]
+        if (index < 3) {
+            return {
+                classes: classes[index]
+            }
+        }
+        return {
+            css: {
+                color: 'black'
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
+
