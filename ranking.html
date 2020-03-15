@@ -26,6 +26,14 @@
         });
     </script>
     <script type="text/javascript">
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
         $.ajax
         ({
             type: "GET",
@@ -37,18 +45,43 @@
             },
             success: function(result){
                 data_ = result
+            
+                yourPromoCode = getUrlVars()["promocode"];
+                if(yourPromoCode.length == 0) {
+                    return;
+                }
+  
+                var i;
+                for (i = 0; i < result.length; i++) {
+                    if (result[i].promoCode == yourPromoCode) {
+                        yourIndex = i + 1;
+                        usedTime = result[i].total;
+                        break;
+                    }
+                }
             }
         });
+
+        window.onload = function(){
+            document.getElementById('yourPromoCode').innerHTML = yourPromoCode;
+            document.getElementById('yourIndex').innerHTML = yourIndex;
+            document.getElementById('usedTime').innerHTML = usedTime;
+        };
     </script>
 </head>
 <body>
 
 <div class="container">
+    <div class="alert alert-success" role="alert">
+        <p>Your promotion code is: <b id="yourPromoCode"></b></p>
+        <p>Rank: <b id="yourIndex"></b> with <b id="usedTime"></b> referral times</p>
+    </div>
+
     <table id="table" data-sort-class="table-active" data-row-style="rowStyle">
         <thead>
           <tr>
             <th data-formatter="runningFormatter">Rank</th>
-            <th data-formatter="" data-field="promoCode">Item Name</th>
+            <th data-formatter="promoCodeFormatter" data-field="promoCode">Item Name</th>
             <th data-field="total">Total</th>
           </tr>
         </thead>
@@ -67,6 +100,9 @@
     }
 
     function promoCodeFormatter(value, row) {
+        if (value.length <= 4) {
+            return value
+        }
         return value.substr(0, 2) + new Array(value.length - 3).join('*') + value.substr([value.length - 2], [value.length - 1])
     }
 
