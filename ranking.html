@@ -65,34 +65,39 @@
         window.onload = function(){
             if (typeof(yourPromoCode) !== "undefined" && typeof(yourIndex) === "number") {
                 document.getElementById("yourRanking").style.display = "block";
-                document.getElementById('yourPromoCode').innerHTML = yourPromoCode;
                 document.getElementById('yourIndex').innerHTML = yourIndex;
-                document.getElementById('usedTime').innerHTML = usedTime;
             }
         };
     </script>
 </head>
 <body>
 
-<div class="container">
+<div class="container">  
+    <div class="page-header">
+        <h1>Top Performers</h1>      
+    </div> 
     <div id="yourRanking" class="alert alert-success" role="alert">
-        <p>Your promotion code is: <b id="yourPromoCode"></b></p>
-        <p>Rank: <b id="yourIndex"></b> with <b id="usedTime"></b> referral times</p>
+        <p>Your Ranking is <b id="yourIndex"></b></p>
     </div>
 
     <table id="table" data-sort-class="table-active" data-row-style="rowStyle">
         <thead>
           <tr>
             <th data-formatter="runningFormatter">Rank</th>
-            <th data-formatter="promoCodeFormatter" data-field="promoCode">Item Name</th>
-            <th data-field="total">Total</th>
+            <th data-formatter="promoCodeFormatter" data-field="promoCode">User Promo Code</th>
           </tr>
         </thead>
     </table>
+    <div class="space"></div>
+</div>
+<div class="footer">
+    <div class="row text-center" style="margin-top: 3%;" >
+      <img class="medium" src="./flashLogo.png" alt="Responsive image">   
+    </div>
 </div>
 
 <script>
-   var $table = $('#table')
+   var $table = $('#table') 
 
     $(function() {
         $table.bootstrapTable({data: data_.slice(0, 10)})
