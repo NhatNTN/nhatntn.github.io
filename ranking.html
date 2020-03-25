@@ -100,7 +100,19 @@
    var $table = $('#table') 
 
     $(function() {
-        $table.bootstrapTable({data: data_.slice(0, 10)})
+        dumpData = data_.slice(0, 50)
+        var i;
+        var topTen = [];
+
+        for (i = 0; i < dumpData.length; i++) {
+            promotionCode = dumpData[i].promoCode.replace(/ /g,'');
+            if (promotionCode.length != 0) {
+                topTen.push(dumpData[i]);
+            }
+        }
+
+        topTen = topTen.slice(0, 10);
+        $table.bootstrapTable({data: topTen});
     })
 
     function runningFormatter(value, row, index) {
