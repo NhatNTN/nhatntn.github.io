@@ -62,7 +62,7 @@
         function payOrder() {
             appId = getUrlVars()["appid"];
             zpTransToken=getUrlVars()["zptranstoken"];  
-            payOrderURL = "https://go.zalopay.vn/f/pay?appid=" + appId + "zptranstoken=" + zpTransToken;
+            payOrderURL = "zalopay://pay?appid=" + appId + "zptranstoken=" + zpTransToken;
             window.open(payOrderURL, '_blank')
         }
     </script>
