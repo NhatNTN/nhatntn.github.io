@@ -50,7 +50,7 @@ img.medium {
 .ranking-header-2 {
   position: absolute;
   width: 100px;
-  left: 40px;
+  left: 12%;
   top: 160px;
   text-align: left;
   color: white;
@@ -64,7 +64,7 @@ img.medium {
   position: absolute;
   width: 100px;
   top: 160px;
-  right: 40px;
+  right: 11%;
   text-align: right;
   color: white;
   font-weight: 600;
@@ -138,7 +138,7 @@ img.medium {
 
 .top2-img {
   position: absolute;
-  left: 43px;
+  left: 12%;
   top: 105px;
   width: 40px;
   height: 40px;
@@ -147,7 +147,7 @@ img.medium {
 
 .top3-img {
   position: absolute;
-  right: 43px;
+  right: 11%;
   top: 105px;
   width: 40px;
   height: 40px;
