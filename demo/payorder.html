@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ZaloPay Order Info</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="payorder.css">
+</head>
+
+<body style="background-color:#f6f7f8;">
+    <nav class="navbar shadow p-3 mb-5 relative" style="background-color:white;">
+        <span class="nav-container">
+            <a href="https://zalopay.vn/" target="_blank">
+                <img src="./images/logozlp.png" class="logo text-warning" style="max-height: 20px; width: auto;">
+              </a>
+        </span>
+    </nav>
+    <div class="container" class="relative">
+        <img src="./images/iconzlp.png" class="rounded-circle img-thumbnail absolute">
+        <div class="card">
+            <div class="card-body" style="text-align: center; display: block;">
+                <br>
+                <h6 class="card-subtitle mb-2 text-muted">Thanh toán đơn hàng</h6>
+                <h2></h2><br>
+                <span class="left">Phí giao dịch</span><span class="right">Miễn phí</span>​
+            </div>
+          </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="alert alert-warning border-left" role="alert" style="font-size: 0.8rem; font-weight: 500;">
+            <p>Thiết bị cần có ứng dụng ZaloPay để thanh toán.</p>
+            <a href="https://apps.apple.com/us/app/zalo-pay-thanh-toan-trong/id1112407590" target="_blank">Tải ứng dụng ZaloPay tại đây</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container border rounded" style="background-color:white; padding-top: 15px; padding-bottom: 15px;">
+            <button type="button" class="btn btn-gradient btn-block" onclick="payOrder()">
+                <img src="./images/iconzlp.png" width="30" height="30" alt="">
+                &nbsp; Thanh toán qua ứng dụng ZaloPay</button>
+            <h2><span>hoặc</span></h2>
+            <button type="button" class="btn btn-white btn-block" 
+            onclick="window.open('https://apps.apple.com/us/app/zalo-pay-thanh-toan-trong/id1112407590', '_blank'); return false;">
+                <i class="fa fa-download"></i>
+                &nbsp; Tải ứng dụng ZaloPay</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+        
+        function payOrder() {
+            appId = getUrlVars()["appid"];
+            zpTransToken=getUrlVars()["zptranstoken"];  
+            payOrderURL = "zalopay://pay?appid=" + appId + "zptranstoken=" + zpTransToken;
+            window.open(payOrderURL, '_blank')
+        }
+    </script>
+</body>
+
+</html>

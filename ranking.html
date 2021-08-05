@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Leader Board</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Capriola' rel='stylesheet'>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link rel="stylesheet" href="ranking.css">
+    <script type="text/javascript">
+        $.ajax
+        ({
+            type: "GET",
+            url: "https://login.thrio.com/provider/token-with-authorities",
+            dataType: 'json',
+            async: false,
+            headers: {
+                "Authorization": "Basic " + btoa("admin@flashe.com" + ":" + "flashe5701##")
+            },
+            success: function(result){
+                token_ = result.token
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        $.ajax
+        ({
+            type: "GET",
+            url: "https://chelsea.thrio.com/data/api/types/flash/ranking",
+            dataType: 'json',
+            async: false,
+            headers: {
+                "Authorization": token_
+            },
+            success: function(result){
+                data_ = result
+            
+                yourPromoCode = getUrlVars()["promocode"];
+                if (typeof(yourPromoCode) === undefined) {
+                    return;
+                }
+  
+                var i;
+                for (i = 0; i < result.length; i++) {
+                    if (result[i].promoCode == yourPromoCode) {
+                        yourIndex = i + 1;
+                        usedTime = result[i].total;
+                        break;
+                    }
+                }
+            }
+        });
+
+        window.onload = function(){
+            if (typeof(yourPromoCode) !== "undefined" && typeof(yourIndex) === "number") {
+                document.getElementById("yourRanking").style.display = "block";
+                document.getElementById('yourIndex').innerHTML = yourIndex;
+            }
+
+            dumpData = data_.slice(0, 50)
+            var i;
+            var topTen = [];
+
+            for (i = 0; i < dumpData.length; i++) {
+                promotionCode = dumpData[i].promoCode.replace(/ /g,'');
+                if (promotionCode.length != 0) {
+                    topTen.push(dumpData[i]);
+                }
+            }
+
+            topTen = topTen.slice(0, 10);
+            var topTenPromoCode = []
+            for (const property in topTen) {
+                promoCode = topTen[property].promoCode
+                if (promoCode.length <= 4) {
+                    topTenPromoCode.push(promoCode)
+                } else {
+                    topTenPromoCode.push(promoCode.substr(0, 2) + new Array(promoCode.length - 3).join('*') + promoCode.substr([promoCode.length - 2], [promoCode.length - 1]))
+                }
+            }
+            document.getElementById("top1h").innerHTML = topTenPromoCode[0];
+            document.getElementById("top2h").innerHTML = topTenPromoCode[1];
+            document.getElementById("top3h").innerHTML = topTenPromoCode[2];
+            document.getElementById("top1").innerHTML = topTenPromoCode[0];
+            document.getElementById("top2").innerHTML = topTenPromoCode[1];
+            document.getElementById("top3").innerHTML = topTenPromoCode[2];
+            document.getElementById("top4").innerHTML = topTenPromoCode[3];
+            document.getElementById("top5").innerHTML = topTenPromoCode[4];
+            document.getElementById("top6").innerHTML = topTenPromoCode[5];
+            document.getElementById("top7").innerHTML = topTenPromoCode[6];
+            document.getElementById("top8").innerHTML = topTenPromoCode[7];
+            document.getElementById("top9").innerHTML = topTenPromoCode[8];
+            document.getElementById("top10").innerHTML = topTenPromoCode[9];
+            console.log(topTenPromoCode)
+        };
+    </script>
+</head>
+<body>
+
+<div class="ranking-header">
+    <svg style="width: 100%; height: 300px">
+        <defs>
+            <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:rgb(229,112,118);stop-opacity:1" />
+              <stop offset="80%" style="stop-color:rgb(230,88,134);stop-opacity:1" />
+            </linearGradient>
+            <filter id="f1" x="0" y="0" width="200%" height="200%">
+                <feOffset result="offOut" in="SourceGraphic" dx="0" dy="8" />
+                <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+                values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
+                <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="12" />
+                <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+            </filter>
+        </defs>
+        <ellipse cx="50%" cy="10%" rx="85%" ry="70%" fill="url(#grad2)" filter="url(#f1)" style="z-index: 1;"/>
+        <circle class="circle-ranking" cx="50%" cy="30%" r="15%" fill="white" fill-opacity="0.4"/>
+        <circle class="circle-ranking" cx="17%" cy="40%" r="12%" fill="white" fill-opacity="0.4"/>
+        <circle class="circle-ranking" cx="83%" cy="40%" r="12%" fill="white" fill-opacity="0.4"/>
+        Sorry, your browser does not support inline SVG.  
+    </svg>
+    <img src="trophy-top1.svg" class="top1-img">
+    <div class="ranking-header-1">
+        <span id="top1h"></span>
+    </div>
+    <img src="trophy-top2.svg" class="top2-img">
+    <div class="ranking-header-2">
+        <span id="top2h"></span>
+    </div>
+    <img src="trophy-top3.svg" class="top3-img">
+    <div class="ranking-header-3">
+        <span id="top3h"></span>
+    </div>
+    <img src="trophy-background.svg" class="background-img">
+</div>
+<div class="container ranking-container">
+    <div class="card ranking-list leader-containter">
+        <h5 class="card-title ranking-title leader-title">
+            <span id="top1"></span>
+        </h5>
+        <img src="trophy-white.svg" class="leader-img">
+    </div>
+    <div class="card ranking-list">
+        <h5 class="card-title ranking-title">
+            2<span id="top2" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list">
+        <h5 class="card-title ranking-title">
+            3<span id="top3" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list" style="height: 45px">
+        <h5 class="card-title ranking-title">
+            4<span id="top4" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list" style="height: 45px">
+        <h5 class="card-title ranking-title">
+            5<span id="top5" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list" style="height: 45px">
+        <h5 class="card-title ranking-title">
+            6<span id="top6" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list" style="height: 45px">
+        <h5 class="card-title ranking-title">
+            7<span id="top7" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list" style="height: 45px">
+        <h5 class="card-title ranking-title">
+            8<span id="top8" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list" style="height: 45px">
+        <h5 class="card-title ranking-title">
+            9<span id="top9" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+    <div class="card ranking-list" style="height: 45px">
+        <h5 class="card-title ranking-title">
+            10<span id="top10" style="margin-left: 40px;"></span>
+        </h5>
+    </div>
+</div>
+
+<script>
+    function rowStyle(row, index) {
+        var classes = [
+        'bg-danger text-white',
+        'bg-warning text-white',
+        'bg-info text-white',
+        ]
+        if (index < 3) {
+            return {
+                classes: classes[index]
+            }
+        }
+        return {
+            css: {
+                color: 'black'
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
+
